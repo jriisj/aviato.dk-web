@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aviato — Silicon Valley Quotes</title>
+
+  <!-- Freely available fonts (served by Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0d12;
+      --card: #111520;
+      --ink: #e7ebf3;
+      --muted: #9aa7bd;
+      --accent: #7dd3fc;
+      --accent-2:#c084fc;
+      --ring: #1e2636;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.02);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 800px at 15% 20%, rgba(125, 211, 252, .07), transparent 60%),
+        radial-gradient(1000px 700px at 85% 80%, rgba(192, 132, 252, .06), transparent 60%),
+        var(--bg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: clamp(16px, 3vw, 36px);
+    }
+
+    .shell{
+      width: min(100%, 900px);
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: clamp(18px, 2.5vw, 28px);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      letter-spacing:.5px;
+      font-weight:700;
+      color: var(--ink);
+      text-decoration:none;
+    }
+    .brand .logo{
+      width: 36px; height: 36px;
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, var(--accent), var(--accent-2));
+      display:grid; place-items:center;
+      box-shadow: var(--shadow);
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      color: #0b0d12;
+      font-weight: 800;
+    }
+    .brand .wordmark{
+      font-weight:700;
+      font-size: clamp(18px, 2vw, 22px);
+    }
+
+    .frame{
+      position:relative;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)) , var(--card);
+      border: 1px solid var(--ring);
+      border-radius: var(--radius);
+      padding: clamp(20px, 4vw, 40px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      min-height: 280px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align: center;
+    }
+
+    blockquote{
+      margin: 0;
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: .2px;
+      font-size: clamp(24px, 4.8vw, 44px);
+      max-width: 32ch;
+      opacity: 0;
+      transform: translateY(10px) scale(.98);
+      filter: blur(3px);
+      transition: opacity 700ms ease, transform 700ms ease, filter 700ms ease;
+      will-change: opacity, transform, filter;
+    }
+    blockquote.show{
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+
+    .source{
+      margin-top: 14px;
+      font-size: clamp(12px, 1.6vw, 14px);
+      color: var(--muted);
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      letter-spacing: .3px;
+      user-select: none;
+    }
+
+    footer{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-top: clamp(16px, 2.5vw, 22px);
+      gap: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+
+    .controls{
+      display:flex; align-items:center; gap: 8px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+    }
+    .btn{
+      border: 1px solid var(--ring);
+      background: transparent;
+      color: var(--ink);
+      padding: 8px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+      font-family: inherit;
+    }
+    .btn:hover{ background: rgba(255,255,255,.04); border-color: #263149; }
+    .btn:active{ transform: translateY(1px); }
+
+    .progress{
+      position: relative;
+      height: 4px;
+      flex: 1;
+      background: #0f1420;
+      border-radius: 999px;
+      overflow: hidden;
+      min-width: 120px;
+      border: 1px solid var(--ring);
+    }
+    .progress > i{
+      position: absolute; inset: 0 100% 0 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: inset 200ms linear;
+    }
+
+    /* Nice focus styles */
+    .btn:focus-visible, .brand:focus-visible{
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(125, 211, 252, .35);
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 420px){
+      header{ flex-direction: column; align-items: flex-start; }
+      .controls{ width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell" role="application" aria-label="Silicon Valley quotes rotator">
+    <header>
+      <a href="/" class="brand" aria-label="Aviato home">
+        <div class="logo" aria-hidden="true">A</div>
+        <div class="wordmark">Aviato</div>
+      </a>
+      <div class="controls" role="group" aria-label="Quote controls">
+        <button class="btn" id="prevBtn" aria-label="Previous quote">← Prev</button>
+        <button class="btn" id="nextBtn" aria-label="Next quote">Next →</button>
+        <button class="btn" id="pauseBtn" aria-label="Pause or resume rotation">Pause</button>
+      </div>
+    </header>
+
+    <main class="frame" aria-live="polite">
+      <blockquote id="quote"></blockquote>
+      <div class="source" id="source">— Silicon Valley (HBO)</div>
+    </main>
+
+    <footer>
+      <div>One quote at a time. No images. 100% responsive.</div>
+      <div class="progress" aria-hidden="true"><i id="progressFill"></i></div>
+    </footer>
+  </div>
+
+  <script>
+    // ↓ Edit this array to add/remove quotes. Keep each under ~90 characters.
+    const QUOTES = [
+      "Middle-out compression.",
+      "This guy fucks.",
+      "We are Pied Piper.",
+      "We're building a new Internet.",
+      "I have zero tolerance for slackers.",
+      "I am… incredibly loyal."
+    ];
+
+    const quoteEl = document.getElementById("quote");
+    const progressFill = document.getElementById("progressFill");
+    const pauseBtn = document.getElementById("pauseBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+
+    let idx = 0;
+    let paused = false;
+
+    const DURATION_MS = 5200;   // total time per quote
+    const FADE_MS = 700;        // matches CSS transition
+
+    function setProgress(p){ // p in [0..1]
+      progressFill.style.insetInlineEnd = (100 - p*100) + "%";
+    }
+
+    function showQuote(i){
+      // Fade out current
+      quoteEl.classList.remove("show");
+      setTimeout(() => {
+        quoteEl.textContent = `“${QUOTES[i]}”`;
+        // Reset progress bar
+        setProgress(0);
+        // Fade in new
+        requestAnimationFrame(() => quoteEl.classList.add("show"));
+      }, FADE_MS);
+    }
+
+    // Progress bar animation using rAF for smoothness
+    let rafId, startTick = null;
+    function tick(ts){
+      if (paused){ startTick = ts; rafId = requestAnimationFrame(tick); return; }
+      if (!startTick) startTick = ts;
+      const elapsed = ts - startTick;
+      const p = Math.min(elapsed / DURATION_MS, 1);
+      setProgress(p);
+      if (elapsed >= DURATION_MS){
+        next();
+        startTick = ts; // reset
+      }
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function next(){
+      idx = (idx + 1) % QUOTES.length;
+      showQuote(idx);
+    }
+    function prev(){
+      idx = (idx - 1 + QUOTES.length) % QUOTES.length;
+      showQuote(idx);
+    }
+
+    // Controls
+    nextBtn.addEventListener("click", () => { next(); resetTimer(); });
+    prevBtn.addEventListener("click", () => { prev(); resetTimer(); });
+    pauseBtn.addEventListener("click", () => {
+      paused = !paused;
+      pauseBtn.textContent = paused ? "Resume" : "Pause";
+    });
+
+    function resetTimer(){
+      // reset the progress animation timeline
+      startTick = null;
+      setProgress(0);
+    }
+
+    // Keyboard shortcuts for accessibility
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { next(); resetTimer(); }
+      if (e.key === "ArrowLeft")  { prev(); resetTimer(); }
+      if (e.key.toLowerCase() === " ") { e.preventDefault(); pauseBtn.click(); }
+    });
+
+    // Initialize
+    quoteEl.textContent = `“${QUOTES[idx]}”`;
+    requestAnimationFrame(() => quoteEl.classList.add("show"));
+    rafId = requestAnimationFrame(tick);
+  </script>
+</body>
+<!-- 
+### PROMPT
+Provide code for a single HTML page that: - will be available on "aviato.dk" - contains quotes in English from the TV show "Silicon Valley" that are transitioned in one at a time - a simple esthetic design that does not use any image files (but can use elements made from text or characters) - is responsive - uses font files that are freely available
+--> 
+</html>
