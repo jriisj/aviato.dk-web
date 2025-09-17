@@ -10,19 +10,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Cinzel:wght@600;800&display=swap" rel="stylesheet">
 
   <style>
-    /* --- Tres Commas colorway (bottle-inspired) --- */
+    /* --- Lightened Tres Commas colorway --- */
     :root{
-      --bg: #0a0a0a;          /* near-black */
-      --card: #1a0c0c;        /* very dark red */
-      --garnet: #5a0b0b;      /* shadow red */
-      --red: #8c1111;         /* label red */
-      --ink: #f8f4ea;         /* warm light text */
-      --muted: #d8c79e;       /* muted gold */
-      --gold: #d4af37;        /* gold */
-      --amber: #f2c14e;       /* brighter gold */
-      --ring: #3a1010;        /* border */
+      --bg: #f7f3e7;      /* warm parchment */
+      --card: #fffaf0;    /* ivory card */
+      --garnet: #f7e7e4;  /* pale rose tint */
+      --red: #c4493f;     /* light label red */
+      --ink: #271a14;     /* deep brown text */
+      --muted: #7d6a38;   /* muted gold-brown */
+      --gold: #c7a433;    /* soft gold */
+      --amber: #f0c86a;   /* light amber */
+      --ring: #e8dfcf;    /* light border */
       --radius: 18px;
-      --shadow: 0 12px 36px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.03);
+      --shadow: 0 12px 28px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.6);
     }
 
     * { box-sizing: border-box; }
@@ -31,8 +31,8 @@
       margin:0;
       color: var(--ink);
       background:
-        radial-gradient(1100px 700px at 15% 25%, rgba(212,175,55,.07), transparent 60%),
-        radial-gradient(1000px 700px at 85% 80%, rgba(140,17,17,.10), transparent 60%),
+        radial-gradient(1100px 700px at 18% 25%, rgba(199,164,51,.10), transparent 60%),
+        radial-gradient(1000px 700px at 85% 80%, rgba(244,210,180,.25), transparent 60%),
         var(--bg);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
       display:flex; align-items:center; justify-content:center;
@@ -54,7 +54,7 @@
     .logo{
       display:grid; grid-auto-flow: column; gap: 6px; align-items:center;
       padding: 8px 10px;
-      background: linear-gradient(180deg, #2a0e0e, var(--garnet));
+      background: linear-gradient(180deg, #fff3f1, var(--garnet));
       border: 1px solid var(--ring);
       border-radius: 14px;
       box-shadow: var(--shadow);
@@ -62,8 +62,8 @@
     .logo i{
       width: 18px; height: 18px; border-radius: 50%;
       display:grid; place-items:center;
-      background: radial-gradient(circle at 30% 25%, #fff6d1 0%, var(--amber) 25%, var(--gold) 65%, #b79225 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 2px 4px rgba(0,0,0,.4);
+      background: radial-gradient(circle at 30% 25%, #fff8d8 0%, #f7e6b1 30%, var(--amber) 65%, #d7b04a 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 4px rgba(0,0,0,.1);
       position: relative;
     }
     .logo i::after{
@@ -84,7 +84,7 @@
 
     .frame{
       position:relative;
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)), var(--card);
+      background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.75)), var(--card);
       border: 1px solid var(--ring);
       border-radius: var(--radius);
       padding: clamp(22px, 4vw, 44px);
@@ -99,13 +99,13 @@
     /* Giant watermark of three commas */
     .frame::after{
       content: ", , ,";
-      position:absolute; inset:auto -8% -8% auto; 
+      position:absolute; inset:auto -6% -8% auto; 
       font-family: "Cinzel", serif;
       font-weight: 800;
       font-size: clamp(140px, 25vw, 340px);
       letter-spacing: .25em;
-      color: rgba(212,175,55,.08);
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,.25));
+      color: rgba(199,164,51,.12);
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.08));
       pointer-events:none;
       z-index: 0;
     }
@@ -123,11 +123,9 @@
       transition: opacity 700ms ease, transform 700ms ease, filter 700ms ease;
       will-change: opacity, transform, filter;
       z-index: 1;
-      text-shadow: 0 1px 0 rgba(0,0,0,.35);
+      text-shadow: 0 1px 0 rgba(0,0,0,.06);
     }
-    blockquote.show{
-      opacity: 1; transform: translateY(0) scale(1); filter: blur(0);
-    }
+    blockquote.show{ opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 
     .source{
       margin-top: 14px;
@@ -145,22 +143,9 @@
       gap: 12px; color: var(--muted); font-size: 14px; flex-wrap: wrap;
     }
 
-    .controls{ display:flex; align-items:center; gap: 8px; font-family: "Cinzel", serif; }
-    .btn{
-      border: 1px solid var(--gold);
-      background: linear-gradient(180deg, #2a0e0e, var(--garnet));
-      color: var(--ink);
-      padding: 8px 12px; border-radius: 12px; cursor: pointer;
-      transition: transform .08s ease, filter .2s ease, background .2s ease, border-color .2s ease;
-      font-family: inherit;
-      box-shadow: 0 1px 0 rgba(255,255,255,.06), inset 0 0 0 9999px rgba(212,175,55,.02);
-    }
-    .btn:hover{ filter: brightness(1.05); border-color: var(--amber); }
-    .btn:active{ transform: translateY(1px); }
-
     .progress{
-      position: relative; height: 4px; flex: 1; min-width: 120px;
-      background: #120707; border-radius: 999px; overflow: hidden; border: 1px solid var(--ring);
+      position: relative; height: 4px; flex: 1; min-width: 140px;
+      background: #f0e6cf; border-radius: 999px; overflow: hidden; border: 1px solid var(--ring);
     }
     .progress > i{
       position: absolute; inset: 0 100% 0 0;
@@ -168,17 +153,9 @@
       transition: inset 200ms linear;
     }
 
-    /* Focus styles */
-    .btn:focus-visible, .brand:focus-visible{
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(212,175,55,.35);
-      border-color: var(--amber);
-    }
-
     /* Mobile tweaks */
     @media (max-width: 420px){
       header{ flex-direction: column; align-items: flex-start; }
-      .controls{ width: 100%; }
     }
   </style>
 </head>
@@ -186,34 +163,29 @@
   <div class="shell" role="application" aria-label="Silicon Valley quotes rotator">
     <header>
       <a href="/" class="brand" aria-label="Aviato home">
-        <div class="logo" aria-hidden="true">
-          <i></i><i></i><i></i>
-        </div>
+        <div class="logo" aria-hidden="true"><i></i><i></i><i></i></div>
         <div class="wordmark">Aviato</div>
       </a>
-      <div class="controls" role="group" aria-label="Quote controls">
-        <button class="btn" id="prevBtn" aria-label="Previous quote">← Prev</button>
-        <button class="btn" id="nextBtn" aria-label="Next quote">Next →</button>
-        <button class="btn" id="pauseBtn" aria-label="Pause or resume rotation">Pause</button>
+      <div aria-hidden="true" style="font-family:'Cinzel',serif;color:var(--muted);">
+        Press ← / →  •  Space = pause
       </div>
     </header>
 
     <main class="frame" aria-live="polite">
       <blockquote id="quote"></blockquote>
-      <div class="source" id="source">— Silicon Valley (HBO)</div>
+      <div class="source">— Silicon Valley (HBO)</div>
     </main>
 
     <footer>
-      <div>Tres Commas edition — responsive, image-free.</div>
+      <div>Tres Commas • light palette • image-free</div>
       <div class="progress" aria-hidden="true"><i id="progressFill"></i></div>
     </footer>
   </div>
 
   <script>
-    // ↓ Edit this array to add/remove quotes.
+    // Add your quotes here (you can paste the larger list you collected earlier)
     const QUOTES = [
       "Middle-out compression.",
-      "This guy fucks.",
       "We're building a new Internet.",
       "I have zero tolerance for slackers.",
       "These are not the doors of a billionaire, Richard.",
@@ -231,15 +203,12 @@
 
     const quoteEl = document.getElementById("quote");
     const progressFill = document.getElementById("progressFill");
-    const pauseBtn = document.getElementById("pauseBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const prevBtn = document.getElementById("prevBtn");
 
     let idx = 0;
     let paused = false;
 
-    const DURATION_MS = 5200;   // total time per quote
-    const FADE_MS = 700;        // matches CSS transition
+    const DURATION_MS = 5200;   // time per quote
+    const FADE_MS = 700;        // CSS transition duration
 
     function setProgress(p){ // p in [0..1]
       progressFill.style.insetInlineEnd = (100 - p*100) + "%";
@@ -254,7 +223,7 @@
       }, FADE_MS);
     }
 
-    // Progress bar animation
+    // Progress bar animation with rAF
     let rafId, startTick = null;
     function tick(ts){
       if (paused){ startTick = ts; rafId = requestAnimationFrame(tick); return; }
@@ -269,22 +238,16 @@
     function next(){ idx = (idx + 1) % QUOTES.length; showQuote(idx); }
     function prev(){ idx = (idx - 1 + QUOTES.length) % QUOTES.length; showQuote(idx); }
 
-    nextBtn.addEventListener("click", () => { next(); resetTimer(); });
-    prevBtn.addEventListener("click", () => { prev(); resetTimer(); });
-    pauseBtn.addEventListener("click", () => {
-      paused = !paused;
-      pauseBtn.textContent = paused ? "Resume" : "Pause";
+    // Keyboard controls only: Space to pause, arrows to navigate
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { next(); resetTimer(); }
+      if (e.key === "ArrowLeft")  { prev(); resetTimer(); }
+      if (e.key === " ") { e.preventDefault(); paused = !paused; }
     });
 
     function resetTimer(){ startTick = null; setProgress(0); }
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") { next(); resetTimer(); }
-      if (e.key === "ArrowLeft")  { prev(); resetTimer(); }
-      if (e.key.toLowerCase() === " ") { e.preventDefault(); pauseBtn.click(); }
-    });
-
-    // Initialize
+    // Init
     quoteEl.textContent = `“${QUOTES[idx]}”`;
     requestAnimationFrame(() => quoteEl.classList.add("show"));
     rafId = requestAnimationFrame(tick);
