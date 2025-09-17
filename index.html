@@ -94,6 +94,9 @@
       display:flex; align-items:center; justify-content:center;
       text-align:center;
       isolation: isolate;
+      /* smooth horizontal swipe while keeping page scroll */
+      touch-action: pan-y;
+      user-select: none;
     }
 
     /* Giant watermark of three commas */
@@ -124,8 +127,31 @@
       will-change: opacity, transform, filter;
       z-index: 1;
       text-shadow: 0 1px 0 rgba(0,0,0,.06);
+      cursor: pointer; /* hint: tap/click works */
     }
     blockquote.show{ opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+
+    /* Idle swipe hints */
+    .hints{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between;
+      pointer-events:none; opacity:0; transition: opacity .45s ease;
+      z-index: 2;
+    }
+    .hints.visible{ opacity:1; }
+    .hint{
+      font-family: "Cinzel", serif;
+      font-weight: 800;
+      font-size: clamp(28px, 5vw, 54px);
+      color: rgba(39,26,20,.35);
+      background: linear-gradient(90deg, transparent, rgba(199,164,51,.18), transparent);
+      padding: 6px 10px; border-radius: 12px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.08));
+      animation-duration: 1.4s; animation-iteration-count: infinite; animation-timing-function: ease-in-out;
+    }
+    @keyframes nudge-left { 0%,100%{ transform: translateX(0) } 50%{ transform: translateX(-6px) } }
+    @keyframes nudge-right{ 0%,100%{ transform: translateX(0) } 50%{ transform: translateX(6px) } }
+    .hint-left { margin-left: 4px;  animation-name: nudge-left;  }
+    .hint-right{ margin-right: 4px; animation-name: nudge-right; }
 
     .source{
       margin-top: 14px;
@@ -153,7 +179,6 @@
       transition: inset 200ms linear;
     }
 
-    /* Mobile tweaks */
     @media (max-width: 420px){
       header{ flex-direction: column; align-items: flex-start; }
     }
@@ -167,12 +192,17 @@
         <div class="wordmark">Aviato</div>
       </a>
       <div aria-hidden="true" style="font-family:'Cinzel',serif;color:var(--muted);">
-        Press ← / →  •  Space = pause
+        Swipe ← / →  •  Tap/Space = pause
       </div>
     </header>
 
     <main class="frame" aria-live="polite">
-      <blockquote id="quote"></blockquote>
+      <blockquote id="quote" title="Tap to pause • Swipe left/right to navigate"></blockquote>
+      <!-- Idle swipe hints -->
+      <div class="hints" id="hints" aria-hidden="true">
+        <div class="hint hint-left">‹</div>
+        <div class="hint hint-right">›</div>
+      </div>
       <div class="source">— Silicon Valley (HBO)</div>
     </main>
 
@@ -183,7 +213,7 @@
   </div>
 
   <script>
-    // Add your quotes here (you can paste the larger list you collected earlier)
+    // Add your quotes here
     const QUOTES = [
       "Middle-out compression.",
       "We're building a new Internet.",
@@ -203,17 +233,24 @@
 
     const quoteEl = document.getElementById("quote");
     const progressFill = document.getElementById("progressFill");
+    const hintsEl = document.getElementById("hints");
 
     let idx = 0;
     let paused = false;
 
     const DURATION_MS = 5200;   // time per quote
     const FADE_MS = 700;        // CSS transition duration
+    const SWIPE_PX = 40;        // horizontal threshold to count as swipe
+    const IDLE_MS = 5000;       // show hints after 5s inactivity
 
+    /* -------- Utilities -------- */
+    function vibrate(pattern){
+      // graceful degradation (no error if unsupported)
+      if (navigator.vibrate) navigator.vibrate(pattern);
+    }
     function setProgress(p){ // p in [0..1]
       progressFill.style.insetInlineEnd = (100 - p*100) + "%";
     }
-
     function showQuote(i){
       quoteEl.classList.remove("show");
       setTimeout(() => {
@@ -222,8 +259,30 @@
         requestAnimationFrame(() => quoteEl.classList.add("show"));
       }, FADE_MS);
     }
+    function next(user=false){
+      idx = (idx + 1) % QUOTES.length; showQuote(idx);
+      if (user) vibrate(12);
+    }
+    function prev(user=false){
+      idx = (idx - 1 + QUOTES.length) % QUOTES.length; showQuote(idx);
+      if (user) vibrate(12);
+    }
+    function togglePause(user=false){
+      paused = !paused;
+      if (user) vibrate([8]);
+    }
 
-    // Progress bar animation with rAF
+    /* -------- Idle hints -------- */
+    let idleTimer = null;
+    function showHints(){ hintsEl.classList.add("visible"); }
+    function hideHints(){ hintsEl.classList.remove("visible"); }
+    function bumpActivity(){
+      hideHints();
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(showHints, IDLE_MS);
+    }
+
+    /* -------- Auto-progress -------- */
     let rafId, startTick = null;
     function tick(ts){
       if (paused){ startTick = ts; rafId = requestAnimationFrame(tick); return; }
@@ -231,19 +290,61 @@
       const elapsed = ts - startTick;
       const p = Math.min(elapsed / DURATION_MS, 1);
       setProgress(p);
-      if (elapsed >= DURATION_MS){ next(); startTick = ts; }
+      if (elapsed >= DURATION_MS){ next(false); startTick = ts; }
       rafId = requestAnimationFrame(tick);
     }
 
-    function next(){ idx = (idx + 1) % QUOTES.length; showQuote(idx); }
-    function prev(){ idx = (idx - 1 + QUOTES.length) % QUOTES.length; showQuote(idx); }
-
-    // Keyboard controls only: Space to pause, arrows to navigate
+    /* -------- Keyboard controls -------- */
     document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") { next(); resetTimer(); }
-      if (e.key === "ArrowLeft")  { prev(); resetTimer(); }
-      if (e.key === " ") { e.preventDefault(); paused = !paused; }
+      if (e.key === "ArrowRight") { next(true); resetTimer(); bumpActivity(); }
+      if (e.key === "ArrowLeft")  { prev(true); resetTimer(); bumpActivity(); }
+      if (e.key === " " || e.code === "Space" || e.key === "Spacebar") {
+        e.preventDefault(); togglePause(true); bumpActivity();
+      }
     });
+
+    /* -------- Click/Tap to pause -------- */
+    quoteEl.addEventListener("click", () => { togglePause(true); bumpActivity(); });
+
+    /* -------- Swipe support (pointer events + touch fallback) -------- */
+    let startX = 0, startY = 0, tracking = false, pointerId = null;
+
+    function onPointerDown(e){
+      tracking = true; pointerId = e.pointerId ?? null;
+      startX = e.clientX; startY = e.clientY;
+      if (quoteEl.setPointerCapture && pointerId != null) quoteEl.setPointerCapture(pointerId);
+      bumpActivity();
+    }
+    function onPointerMove(e){
+      if (!tracking) return;
+      const dx = e.clientX - startX, dy = e.clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) e.preventDefault();
+    }
+    function onPointerUp(e){
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.clientX - startX, dy = e.clientY - startY;
+      if (Math.abs(dx) >= SWIPE_PX && Math.abs(dx) > Math.abs(dy)){
+        if (dx < 0) { next(true); resetTimer(); } else { prev(true); resetTimer(); }
+      } else {
+        togglePause(true);
+      }
+      if (quoteEl.releasePointerCapture && pointerId != null) quoteEl.releasePointerCapture(pointerId);
+      pointerId = null;
+      bumpActivity();
+    }
+    if (window.PointerEvent){
+      quoteEl.addEventListener("pointerdown", onPointerDown);
+      quoteEl.addEventListener("pointermove", onPointerMove, { passive:false });
+      quoteEl.addEventListener("pointerup", onPointerUp);
+      quoteEl.addEventListener("pointercancel", () => { tracking = false; pointerId = null; });
+    } else {
+      // Touch fallback (older browsers)
+      quoteEl.addEventListener("touchstart", (e)=>{ const t=e.changedTouches[0]; startX=t.clientX; startY=t.clientY; tracking=true; bumpActivity(); }, {passive:true});
+      quoteEl.addEventListener("touchmove", (e)=>{ if(!tracking) return; const t=e.changedTouches[0]; const dx=t.clientX-startX; const dy=t.clientY-startY; if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>8) e.preventDefault(); }, {passive:false});
+      quoteEl.addEventListener("touchend", (e)=>{ if(!tracking) return; tracking=false; const t=e.changedTouches[0]; const dx=t.clientX-startX; const dy=t.clientY-startY; if (Math.abs(dx)>=SWIPE_PX && Math.abs(dx)>Math.abs(dy)){ if (dx<0){ next(true); resetTimer(); } else { prev(true); resetTimer(); } } else { togglePause(true); } bumpActivity(); }, {passive:false});
+      quoteEl.addEventListener("touchcancel", ()=>{ tracking=false; });
+    }
 
     function resetTimer(){ startTick = null; setProgress(0); }
 
@@ -251,6 +352,8 @@
     quoteEl.textContent = `“${QUOTES[idx]}”`;
     requestAnimationFrame(() => quoteEl.classList.add("show"));
     rafId = requestAnimationFrame(tick);
+    bumpActivity(); // start idle-hint timer
   </script>
 </body>
 </html>
+
