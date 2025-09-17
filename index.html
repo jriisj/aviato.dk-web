@@ -5,94 +5,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aviato — Silicon Valley Quotes</title>
 
-  <!-- Freely available fonts (served by Google Fonts) -->
+  <!-- Freely available fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Cinzel:wght@600;800&display=swap" rel="stylesheet">
 
   <style>
+    /* --- Tres Commas colorway (bottle-inspired) --- */
     :root{
-      --bg: #0b0d12;
-      --card: #111520;
-      --ink: #e7ebf3;
-      --muted: #9aa7bd;
-      --accent: #7dd3fc;
-      --accent-2:#c084fc;
-      --ring: #1e2636;
+      --bg: #0a0a0a;          /* near-black */
+      --card: #1a0c0c;        /* very dark red */
+      --garnet: #5a0b0b;      /* shadow red */
+      --red: #8c1111;         /* label red */
+      --ink: #f8f4ea;         /* warm light text */
+      --muted: #d8c79e;       /* muted gold */
+      --gold: #d4af37;        /* gold */
+      --amber: #f2c14e;       /* brighter gold */
+      --ring: #3a1010;        /* border */
       --radius: 18px;
-      --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.02);
+      --shadow: 0 12px 36px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.03);
     }
 
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body{
       margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(1200px 800px at 15% 20%, rgba(125, 211, 252, .07), transparent 60%),
-        radial-gradient(1000px 700px at 85% 80%, rgba(192, 132, 252, .06), transparent 60%),
+        radial-gradient(1100px 700px at 15% 25%, rgba(212,175,55,.07), transparent 60%),
+        radial-gradient(1000px 700px at 85% 80%, rgba(140,17,17,.10), transparent 60%),
         var(--bg);
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      display:flex; align-items:center; justify-content:center;
       padding: clamp(16px, 3vw, 36px);
     }
 
-    .shell{
-      width: min(100%, 900px);
-    }
+    .shell{ width: min(100%, 900px); }
 
     header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      margin-bottom: clamp(18px, 2.5vw, 28px);
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 12px; margin-bottom: clamp(18px, 2.5vw, 28px);
     }
     .brand{
-      display:flex;
-      align-items:center;
-      gap: 12px;
+      display:flex; align-items:center; gap: 12px; text-decoration:none; color: var(--ink);
       letter-spacing:.5px;
-      font-weight:700;
-      color: var(--ink);
-      text-decoration:none;
     }
-    .brand .logo{
-      width: 36px; height: 36px;
-      border-radius: 12px;
-      background:
-        linear-gradient(135deg, var(--accent), var(--accent-2));
-      display:grid; place-items:center;
+
+    /* --- Tres Commas medallion logo (pure CSS) --- */
+    .logo{
+      display:grid; grid-auto-flow: column; gap: 6px; align-items:center;
+      padding: 8px 10px;
+      background: linear-gradient(180deg, #2a0e0e, var(--garnet));
+      border: 1px solid var(--ring);
+      border-radius: 14px;
       box-shadow: var(--shadow);
-      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      color: #0b0d12;
-      font-weight: 800;
     }
-    .brand .wordmark{
-      font-weight:700;
+    .logo i{
+      width: 18px; height: 18px; border-radius: 50%;
+      display:grid; place-items:center;
+      background: radial-gradient(circle at 30% 25%, #fff6d1 0%, var(--amber) 25%, var(--gold) 65%, #b79225 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 2px 4px rgba(0,0,0,.4);
+      position: relative;
+    }
+    .logo i::after{
+      content: ",";
+      font-family: "Cinzel", serif;
+      font-weight: 800;
+      font-size: 18px;
+      line-height: 1;
+      color: var(--red);
+      transform: translateY(-2px);
+    }
+    .wordmark{
+      font-family: "Cinzel", serif;
+      font-weight: 800;
       font-size: clamp(18px, 2vw, 22px);
+      letter-spacing:.04em;
     }
 
     .frame{
       position:relative;
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)) , var(--card);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)), var(--card);
       border: 1px solid var(--ring);
       border-radius: var(--radius);
-      padding: clamp(20px, 4vw, 40px);
+      padding: clamp(22px, 4vw, 44px);
       box-shadow: var(--shadow);
       overflow:hidden;
-      min-height: 280px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align: center;
+      min-height: 300px;
+      display:flex; align-items:center; justify-content:center;
+      text-align:center;
+      isolation: isolate;
+    }
+
+    /* Giant watermark of three commas */
+    .frame::after{
+      content: ", , ,";
+      position:absolute; inset:auto -8% -8% auto; 
+      font-family: "Cinzel", serif;
+      font-weight: 800;
+      font-size: clamp(140px, 25vw, 340px);
+      letter-spacing: .25em;
+      color: rgba(212,175,55,.08);
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.25));
+      pointer-events:none;
+      z-index: 0;
     }
 
     blockquote{
       margin: 0;
-      font-weight: 500;
-      line-height: 1.25;
+      font-weight: 600;
+      line-height: 1.2;
       letter-spacing: .2px;
       font-size: clamp(24px, 4.8vw, 44px);
       max-width: 32ch;
@@ -101,70 +122,57 @@
       filter: blur(3px);
       transition: opacity 700ms ease, transform 700ms ease, filter 700ms ease;
       will-change: opacity, transform, filter;
+      z-index: 1;
+      text-shadow: 0 1px 0 rgba(0,0,0,.35);
     }
     blockquote.show{
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      filter: blur(0);
+      opacity: 1; transform: translateY(0) scale(1); filter: blur(0);
     }
 
     .source{
       margin-top: 14px;
       font-size: clamp(12px, 1.6vw, 14px);
       color: var(--muted);
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      letter-spacing: .3px;
+      font-family: "Cinzel", serif;
+      letter-spacing: .06em;
       user-select: none;
+      z-index: 1;
     }
 
     footer{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between;
       margin-top: clamp(16px, 2.5vw, 22px);
-      gap: 12px;
-      color: var(--muted);
-      font-size: 14px;
-      flex-wrap: wrap;
+      gap: 12px; color: var(--muted); font-size: 14px; flex-wrap: wrap;
     }
 
-    .controls{
-      display:flex; align-items:center; gap: 8px;
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-    }
+    .controls{ display:flex; align-items:center; gap: 8px; font-family: "Cinzel", serif; }
     .btn{
-      border: 1px solid var(--ring);
-      background: transparent;
+      border: 1px solid var(--gold);
+      background: linear-gradient(180deg, #2a0e0e, var(--garnet));
       color: var(--ink);
-      padding: 8px 12px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+      padding: 8px 12px; border-radius: 12px; cursor: pointer;
+      transition: transform .08s ease, filter .2s ease, background .2s ease, border-color .2s ease;
       font-family: inherit;
+      box-shadow: 0 1px 0 rgba(255,255,255,.06), inset 0 0 0 9999px rgba(212,175,55,.02);
     }
-    .btn:hover{ background: rgba(255,255,255,.04); border-color: #263149; }
+    .btn:hover{ filter: brightness(1.05); border-color: var(--amber); }
     .btn:active{ transform: translateY(1px); }
 
     .progress{
-      position: relative;
-      height: 4px;
-      flex: 1;
-      background: #0f1420;
-      border-radius: 999px;
-      overflow: hidden;
-      min-width: 120px;
-      border: 1px solid var(--ring);
+      position: relative; height: 4px; flex: 1; min-width: 120px;
+      background: #120707; border-radius: 999px; overflow: hidden; border: 1px solid var(--ring);
     }
     .progress > i{
       position: absolute; inset: 0 100% 0 0;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      background: linear-gradient(90deg, var(--gold), var(--amber));
       transition: inset 200ms linear;
     }
 
-    /* Nice focus styles */
+    /* Focus styles */
     .btn:focus-visible, .brand:focus-visible{
       outline: none;
-      box-shadow: 0 0 0 3px rgba(125, 211, 252, .35);
+      box-shadow: 0 0 0 3px rgba(212,175,55,.35);
+      border-color: var(--amber);
     }
 
     /* Mobile tweaks */
@@ -178,7 +186,9 @@
   <div class="shell" role="application" aria-label="Silicon Valley quotes rotator">
     <header>
       <a href="/" class="brand" aria-label="Aviato home">
-        <div class="logo" aria-hidden="true">A</div>
+        <div class="logo" aria-hidden="true">
+          <i></i><i></i><i></i>
+        </div>
         <div class="wordmark">Aviato</div>
       </a>
       <div class="controls" role="group" aria-label="Quote controls">
@@ -194,13 +204,13 @@
     </main>
 
     <footer>
-      <div>One quote at a time. No images. 100% responsive.</div>
+      <div>Tres Commas edition — responsive, image-free.</div>
       <div class="progress" aria-hidden="true"><i id="progressFill"></i></div>
     </footer>
   </div>
 
   <script>
-    // ↓ Edit this array to add/remove quotes. Keep each under ~90 characters.
+    // ↓ Edit this array to add/remove quotes.
     const QUOTES = [
       "Middle-out compression.",
       "This guy fucks.",
@@ -236,18 +246,15 @@
     }
 
     function showQuote(i){
-      // Fade out current
       quoteEl.classList.remove("show");
       setTimeout(() => {
         quoteEl.textContent = `“${QUOTES[i]}”`;
-        // Reset progress bar
         setProgress(0);
-        // Fade in new
         requestAnimationFrame(() => quoteEl.classList.add("show"));
       }, FADE_MS);
     }
 
-    // Progress bar animation using rAF for smoothness
+    // Progress bar animation
     let rafId, startTick = null;
     function tick(ts){
       if (paused){ startTick = ts; rafId = requestAnimationFrame(tick); return; }
@@ -255,23 +262,13 @@
       const elapsed = ts - startTick;
       const p = Math.min(elapsed / DURATION_MS, 1);
       setProgress(p);
-      if (elapsed >= DURATION_MS){
-        next();
-        startTick = ts; // reset
-      }
+      if (elapsed >= DURATION_MS){ next(); startTick = ts; }
       rafId = requestAnimationFrame(tick);
     }
 
-    function next(){
-      idx = (idx + 1) % QUOTES.length;
-      showQuote(idx);
-    }
-    function prev(){
-      idx = (idx - 1 + QUOTES.length) % QUOTES.length;
-      showQuote(idx);
-    }
+    function next(){ idx = (idx + 1) % QUOTES.length; showQuote(idx); }
+    function prev(){ idx = (idx - 1 + QUOTES.length) % QUOTES.length; showQuote(idx); }
 
-    // Controls
     nextBtn.addEventListener("click", () => { next(); resetTimer(); });
     prevBtn.addEventListener("click", () => { prev(); resetTimer(); });
     pauseBtn.addEventListener("click", () => {
@@ -279,13 +276,8 @@
       pauseBtn.textContent = paused ? "Resume" : "Pause";
     });
 
-    function resetTimer(){
-      // reset the progress animation timeline
-      startTick = null;
-      setProgress(0);
-    }
+    function resetTimer(){ startTick = null; setProgress(0); }
 
-    // Keyboard shortcuts for accessibility
     document.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight") { next(); resetTimer(); }
       if (e.key === "ArrowLeft")  { prev(); resetTimer(); }
@@ -298,8 +290,4 @@
     rafId = requestAnimationFrame(tick);
   </script>
 </body>
-<!-- 
-### PROMPT
-Provide code for a single HTML page that: - will be available on "aviato.dk" - contains quotes in English from the TV show "Silicon Valley" that are transitioned in one at a time - a simple esthetic design that does not use any image files (but can use elements made from text or characters) - is responsive - uses font files that are freely available
---> 
 </html>
