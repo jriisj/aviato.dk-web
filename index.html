@@ -1,359 +1,686 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aviato — Silicon Valley Quotes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz@24&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- Freely available fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Cinzel:wght@600;800&display=swap" rel="stylesheet">
+        :root {
+            --md-sys-color-primary: #6750a4;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #eaddff;
+            --md-sys-color-on-primary-container: #21005e;
+            --md-sys-color-secondary: #625b71;
+            --md-sys-color-on-secondary: #ffffff;
+            --md-sys-color-secondary-container: #e8def8;
+            --md-sys-color-on-secondary-container: #1e192b;
+            --md-sys-color-tertiary: #7d5260;
+            --md-sys-color-on-tertiary: #ffffff;
+            --md-sys-color-tertiary-container: #ffd8e4;
+            --md-sys-color-on-tertiary-container: #31111d;
+            --md-sys-color-error: #b3261e;
+            --md-sys-color-on-error: #ffffff;
+            --md-sys-color-error-container: #f9dedc;
+            --md-sys-color-on-error-container: #410e0b;
+            --md-sys-color-background: #fffbfe;
+            --md-sys-color-on-background: #1c1b1f;
+            --md-sys-color-surface: #fffbfe;
+            --md-sys-color-on-surface: #1c1b1f;
+            --md-sys-color-surface-variant: #e7e0ec;
+            --md-sys-color-on-surface-variant: #49454e;
+            --md-sys-color-surface-container: #f3eff4;
+            --md-sys-color-surface-container-high: #ede9f3;
+            --md-sys-color-surface-container-highest: #e8e4f0;
+            --md-sys-color-outline: #79747e;
+            --md-sys-color-outline-variant: #cac7d0;
+            --md-sys-color-scrim: #000000;
+            --md-sys-color-shadow: #000000;
 
-  <style>
-    /* --- Lightened Tres Commas colorway --- */
-    :root{
-      --bg: #f7f3e7;      /* warm parchment */
-      --card: #fffaf0;    /* ivory card */
-      --garnet: #f7e7e4;  /* pale rose tint */
-      --red: #c4493f;     /* light label red */
-      --ink: #271a14;     /* deep brown text */
-      --muted: #7d6a38;   /* muted gold-brown */
-      --gold: #c7a433;    /* soft gold */
-      --amber: #f0c86a;   /* light amber */
-      --ring: #e8dfcf;    /* light border */
-      --radius: 18px;
-      --shadow: 0 12px 28px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.6);
-    }
+            --md-sys-shape-corner-extra-large: 32px;
+            --md-sys-shape-corner-large: 28px;
+            --md-sys-shape-corner-medium: 12px;
+            --md-sys-shape-corner-small: 4px;
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body{
-      margin:0;
-      color: var(--ink);
-      background:
-        radial-gradient(1100px 700px at 18% 25%, rgba(199,164,51,.10), transparent 60%),
-        radial-gradient(1000px 700px at 85% 80%, rgba(244,210,180,.25), transparent 60%),
-        var(--bg);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-      display:flex; align-items:center; justify-content:center;
-      padding: clamp(16px, 3vw, 36px);
-    }
+            --md-sys-elevation-level-1: 0 1px 3px 1px rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+            --md-sys-elevation-level-2: 0 3px 6px 3px rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+            --md-sys-elevation-level-3: 0 6px 10px 4px rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24);
 
-    .shell{ width: min(100%, 900px); }
+            --md-state-layer-hover: 0.08;
+            --md-state-layer-focus: 0.12;
+            --md-state-layer-pressed: 0.12;
+        }
 
-    header{
-      display:flex; align-items:center; justify-content:space-between;
-      gap: 12px; margin-bottom: clamp(18px, 2.5vw, 28px);
-    }
-    .brand{
-      display:flex; align-items:center; gap: 12px; text-decoration:none; color: var(--ink);
-      letter-spacing:.5px;
-    }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --md-sys-color-primary: #d0bcff;
+                --md-sys-color-on-primary: #371e55;
+                --md-sys-color-primary-container: #4f378b;
+                --md-sys-color-on-primary-container: #eaddff;
+                --md-sys-color-secondary: #ccc7d8;
+                --md-sys-color-on-secondary: #332d41;
+                --md-sys-color-secondary-container: #4a4458;
+                --md-sys-color-on-secondary-container: #e8def8;
+                --md-sys-color-tertiary: #f0b8d8;
+                --md-sys-color-on-tertiary: #492532;
+                --md-sys-color-tertiary-container: #633b48;
+                --md-sys-color-on-tertiary-container: #ffd8e4;
+                --md-sys-color-error: #f2b8b5;
+                --md-sys-color-on-error: #601410;
+                --md-sys-color-error-container: #8c1d18;
+                --md-sys-color-on-error-container: #f9dedc;
+                --md-sys-color-background: #1c1b1f;
+                --md-sys-color-on-background: #e6e1e6;
+                --md-sys-color-surface: #1c1b1f;
+                --md-sys-color-on-surface: #e6e1e6;
+                --md-sys-color-surface-variant: #49454e;
+                --md-sys-color-on-surface-variant: #cac7d0;
+                --md-sys-color-surface-container: #2b2930;
+                --md-sys-color-surface-container-high: #36343a;
+                --md-sys-color-surface-container-highest: #413f46;
+                --md-sys-color-outline: #9e9da3;
+                --md-sys-color-outline-variant: #49454e;
+                --md-sys-color-scrim: #000000;
+                --md-sys-color-shadow: #000000;
+            }
+        }
 
-    /* --- Tres Commas medallion logo (pure CSS) --- */
-    .logo{
-      display:grid; grid-auto-flow: column; gap: 6px; align-items:center;
-      padding: 8px 10px;
-      background: linear-gradient(180deg, #fff3f1, var(--garnet));
-      border: 1px solid var(--ring);
-      border-radius: 14px;
-      box-shadow: var(--shadow);
-    }
-    .logo i{
-      width: 18px; height: 18px; border-radius: 50%;
-      display:grid; place-items:center;
-      background: radial-gradient(circle at 30% 25%, #fff8d8 0%, #f7e6b1 30%, var(--amber) 65%, #d7b04a 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 4px rgba(0,0,0,.1);
-      position: relative;
-    }
-    .logo i::after{
-      content: ",";
-      font-family: "Cinzel", serif;
-      font-weight: 800;
-      font-size: 18px;
-      line-height: 1;
-      color: var(--red);
-      transform: translateY(-2px);
-    }
-    .wordmark{
-      font-family: "Cinzel", serif;
-      font-weight: 800;
-      font-size: clamp(18px, 2vw, 22px);
-      letter-spacing:.04em;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    .frame{
-      position:relative;
-      background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.75)), var(--card);
-      border: 1px solid var(--ring);
-      border-radius: var(--radius);
-      padding: clamp(22px, 4vw, 44px);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      min-height: 300px;
-      display:flex; align-items:center; justify-content:center;
-      text-align:center;
-      isolation: isolate;
-      /* smooth horizontal swipe while keeping page scroll */
-      touch-action: pan-y;
-      user-select: none;
-    }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            line-height: 1.6;
+        }
 
-    /* Giant watermark of three commas */
-    .frame::after{
-      content: ", , ,";
-      position:absolute; inset:auto -6% -8% auto; 
-      font-family: "Cinzel", serif;
-      font-weight: 800;
-      font-size: clamp(140px, 25vw, 340px);
-      letter-spacing: .25em;
-      color: rgba(199,164,51,.12);
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,.08));
-      pointer-events:none;
-      z-index: 0;
-    }
+        .material-symbols-rounded {
+            font-family: 'Material Symbols Rounded';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+        }
 
-    blockquote{
-      margin: 0;
-      font-weight: 600;
-      line-height: 1.2;
-      letter-spacing: .2px;
-      font-size: clamp(24px, 4.8vw, 44px);
-      max-width: 32ch;
-      opacity: 0;
-      transform: translateY(10px) scale(.98);
-      filter: blur(3px);
-      transition: opacity 700ms ease, transform 700ms ease, filter 700ms ease;
-      will-change: opacity, transform, filter;
-      z-index: 1;
-      text-shadow: 0 1px 0 rgba(0,0,0,.06);
-      cursor: pointer; /* hint: tap/click works */
-    }
-    blockquote.show{ opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background-color: var(--md-sys-color-surface);
+            z-index: 100;
+            transition: box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
 
-    /* Idle swipe hints */
-    .hints{
-      position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between;
-      pointer-events:none; opacity:0; transition: opacity .45s ease;
-      z-index: 2;
-    }
-    .hints.visible{ opacity:1; }
-    .hint{
-      font-family: "Cinzel", serif;
-      font-weight: 800;
-      font-size: clamp(28px, 5vw, 54px);
-      color: rgba(39,26,20,.35);
-      background: linear-gradient(90deg, transparent, rgba(199,164,51,.18), transparent);
-      padding: 6px 10px; border-radius: 12px;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,.08));
-      animation-duration: 1.4s; animation-iteration-count: infinite; animation-timing-function: ease-in-out;
-    }
-    @keyframes nudge-left { 0%,100%{ transform: translateX(0) } 50%{ transform: translateX(-6px) } }
-    @keyframes nudge-right{ 0%,100%{ transform: translateX(0) } 50%{ transform: translateX(6px) } }
-    .hint-left { margin-left: 4px;  animation-name: nudge-left;  }
-    .hint-right{ margin-right: 4px; animation-name: nudge-right; }
+        header.elevated {
+            box-shadow: var(--md-sys-elevation-level-2);
+        }
 
-    .source{
-      margin-top: 14px;
-      font-size: clamp(12px, 1.6vw, 14px);
-      color: var(--muted);
-      font-family: "Cinzel", serif;
-      letter-spacing: .06em;
-      user-select: none;
-      z-index: 1;
-    }
+        .header-left {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--md-sys-color-primary);
+        }
 
-    footer{
-      display:flex; align-items:center; justify-content:space-between;
-      margin-top: clamp(16px, 2.5vw, 22px);
-      gap: 12px; color: var(--muted); font-size: 14px; flex-wrap: wrap;
-    }
+        nav {
+            display: flex;
+            gap: 32px;
+        }
 
-    .progress{
-      position: relative; height: 4px; flex: 1; min-width: 140px;
-      background: #f0e6cf; border-radius: 999px; overflow: hidden; border: 1px solid var(--ring);
-    }
-    .progress > i{
-      position: absolute; inset: 0 100% 0 0;
-      background: linear-gradient(90deg, var(--gold), var(--amber));
-      transition: inset 200ms linear;
-    }
+        nav a {
+            text-decoration: none;
+            color: var(--md-sys-color-on-surface);
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.2s ease;
+        }
 
-    @media (max-width: 420px){
-      header{ flex-direction: column; align-items: flex-start; }
-    }
-  </style>
+        nav a::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: var(--md-sys-shape-corner-small);
+            background-color: var(--md-sys-color-primary);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: -1;
+        }
+
+        nav a:hover::before {
+            opacity: var(--md-state-layer-hover);
+        }
+
+        nav a:focus {
+            outline: none;
+        }
+
+        nav a:focus::before {
+            opacity: var(--md-state-layer-focus);
+        }
+
+        main {
+            margin-top: 64px;
+        }
+
+        section {
+            scroll-margin-top: 80px;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--md-sys-color-surface-container-high), var(--md-sys-color-surface));
+            padding: 24px;
+        }
+
+        .hero-content h1 {
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 32px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--md-sys-shape-corner-medium);
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            box-shadow: var(--md-sys-elevation-level-1);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: var(--md-sys-color-on-primary);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .btn-primary:hover::before {
+            opacity: var(--md-state-layer-hover);
+        }
+
+        .btn-primary:focus::before {
+            opacity: var(--md-state-layer-focus);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--md-sys-color-primary);
+            border: 2px solid var(--md-sys-color-outline);
+        }
+
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: var(--md-sys-color-primary);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .btn-secondary:hover::before {
+            opacity: var(--md-state-layer-hover);
+        }
+
+        .btn-secondary:focus::before {
+            opacity: var(--md-state-layer-focus);
+        }
+
+        .btn-secondary:hover {
+            color: var(--md-sys-color-primary);
+        }
+
+        .about {
+            padding: 80px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--md-sys-color-surface);
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 16px;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .about-avatar {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--md-sys-color-primary-container), var(--md-sys-color-secondary-container));
+            border-radius: var(--md-sys-shape-corner-large);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+            box-shadow: var(--md-sys-elevation-level-1);
+            margin: 0 auto;
+        }
+
+        .skills {
+            padding: 80px 24px;
+            background-color: var(--md-sys-color-surface-container);
+        }
+
+        .skills-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .chip {
+            padding: 8px 16px;
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+            border-radius: var(--md-sys-shape-corner-large);
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+        }
+
+        .chip::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: var(--md-sys-color-on-secondary-container);
+            border-radius: var(--md-sys-shape-corner-large);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .chip:hover::before {
+            opacity: var(--md-state-layer-hover);
+        }
+
+        .projects {
+            padding: 80px 24px;
+            background-color: var(--md-sys-color-surface);
+        }
+
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .card {
+            background-color: var(--md-sys-color-surface-container-high);
+            border-radius: var(--md-sys-shape-corner-large);
+            padding: 24px;
+            box-shadow: var(--md-sys-elevation-level-1);
+            transition: box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--md-sys-elevation-level-3);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .card-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .card-chip {
+            padding: 4px 12px;
+            background-color: var(--md-sys-color-tertiary-container);
+            color: var(--md-sys-color-on-tertiary-container);
+            border-radius: var(--md-sys-shape-corner-medium);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .card-action {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--md-sys-color-primary);
+            text-decoration: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            display: inline-block;
+        }
+
+        .privacy {
+            padding: 40px 24px;
+            background-color: var(--md-sys-color-surface-container-high);
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .privacy-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .privacy-icon {
+            color: var(--md-sys-color-primary);
+            flex-shrink: 0;
+            font-size: 24px;
+        }
+
+        .privacy-text {
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.6;
+        }
+
+        footer {
+            padding: 40px 24px;
+            background-color: var(--md-sys-color-surface-container);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .footer-link {
+            color: var(--md-sys-color-primary);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .footer-copyright {
+            font-size: 12px;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 12px;
+        }
+
+        .footer-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            border-radius: var(--md-sys-shape-corner-medium);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 40px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .about-avatar {
+                width: 150px;
+                height: 150px;
+                font-size: 56px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .privacy-content {
+                flex-direction: column;
+            }
+
+            .footer-links {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="shell" role="application" aria-label="Silicon Valley quotes rotator">
-    <header>
-      <a href="/" class="brand" aria-label="Aviato home">
-        <div class="logo" aria-hidden="true"><i></i><i></i><i></i></div>
-        <div class="wordmark">Aviato</div>
-      </a>
-      <div aria-hidden="true" style="font-family:'Cinzel',serif;color:var(--muted);">
-        Swipe ← / →  •  Tap/Space = pause
-      </div>
+    <header id="app-bar">
+        <div class="header-left">J</div>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+        </nav>
     </header>
 
-    <main class="frame" aria-live="polite">
-      <blockquote id="quote" title="Tap to pause • Swipe left/right to navigate"></blockquote>
-      <!-- Idle swipe hints -->
-      <div class="hints" id="hints" aria-hidden="true">
-        <div class="hint hint-left">‹</div>
-        <div class="hint hint-right">›</div>
-      </div>
-      <div class="source">— Silicon Valley (HBO)</div>
+    <main>
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <h1>Johan</h1>
+                <p>Creative technologist building elegant solutions</p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">View my work</a>
+                    <a href="https://www.linkedin.com/in/TODO_LINKEDIN_HANDLE" class="btn btn-secondary">Connect on LinkedIn</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <h2 class="section-title">About</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm a technical professional with a passion for building innovative digital products and services. With a background in software engineering and product strategy, I specialize in bridging the gap between complex technical challenges and elegant user experiences.</p>
+                    <p>My work spans across full-stack development, system design, and product thinking. I'm driven by solving real problems for real users, and I believe deeply in thoughtful engineering and deliberate craft.</p>
+                    <p>Beyond work, I'm an avid skier, golf enthusiast, and home technology tinkerer. I love exploring the intersection of technology, nature, and quality of life.</p>
+                </div>
+                <div class="about-avatar">J</div>
+            </div>
+        </section>
+
+        <section class="skills" id="skills">
+            <div class="skills-container">
+                <h2 class="section-title">Skills & Expertise</h2>
+                <div class="skills-grid">
+                    <div class="chip">Full-Stack Development</div>
+                    <div class="chip">Product Architecture</div>
+                    <div class="chip">System Design</div>
+                    <div class="chip">API Design</div>
+                    <div class="chip">Cloud Infrastructure</div>
+                    <div class="chip">Data Processing</div>
+                    <div class="chip">Team Leadership</div>
+                    <div class="chip">Agile Methodology</div>
+                    <div class="chip">UX Engineering</div>
+                    <div class="chip">DevOps</div>
+                    <div class="chip">Performance Optimization</div>
+                    <div class="chip">Technical Documentation</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="projects" id="projects">
+            <div class="projects-container">
+                <h2 class="section-title">Projects</h2>
+                <div class="projects-grid">
+                    <div class="card">
+                        <div class="card-title">PDF License Management Platform</div>
+                        <div class="card-description">Enterprise-grade SaaS solution for managing PDF processing licenses and reseller partnerships with real-time analytics and automated billing integration.</div>
+                        <div class="card-chips">
+                            <span class="card-chip">Node.js</span>
+                            <span class="card-chip">PostgreSQL</span>
+                            <span class="card-chip">React</span>
+                        </div>
+                        <a href="#" class="card-action">View project</a>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">AI-Assisted Developer Tools Integration</div>
+                        <div class="card-description">Model Context Protocol (MCP) server implementation enabling AI assistants to interact with development workflows and expand product reach to AI-assisted developer ecosystem.</div>
+                        <div class="card-chips">
+                            <span class="card-chip">MCP Protocol</span>
+                            <span class="card-chip">Python</span>
+                            <span class="card-chip">Integration</span>
+                        </div>
+                        <a href="#" class="card-action">View project</a>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Support Email RAG Pipeline</div>
+                        <div class="card-description">Intelligent email processing system with PII anonymization, semantic retrieval, and AI-powered response generation. Dockerized MVP with filesystem queue and observability.</div>
+                        <div class="card-chips">
+                            <span class="card-chip">Docker</span>
+                            <span class="card-chip">LLM</span>
+                            <span class="card-chip">Presidio</span>
+                        </div>
+                        <a href="#" class="card-action">View project</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="privacy">
+            <div class="privacy-content">
+                <span class="privacy-icon material-symbols-rounded">shield</span>
+                <div class="privacy-text">This site uses no cookies, no trackers, and no analytics. Your visit is completely private.</div>
+            </div>
+        </section>
     </main>
 
     <footer>
-      <div>Tres Commas • light palette • image-free</div>
-      <div class="progress" aria-hidden="true"><i id="progressFill"></i></div>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/in/jriisj" class="footer-link">
+                    <span class="material-symbols-rounded">link</span>
+                    LinkedIn
+                </a>
+            </div>
+            <div class="footer-copyright">© 2026. All rights reserved.</div>
+            <div class="footer-badge">Built with zero tracking</div>
+        </div>
     </footer>
-  </div>
 
-  <script>
-    // Add your quotes here
-    const QUOTES = [
-      "Middle-out compression.",
-      "We're building a new Internet.",
-      "I have zero tolerance for slackers.",
-      "These are not the doors of a billionaire, Richard.",
-      "I have a boat, but wait, that's not a skill.",
-      "Thoughts and prayers, obviously.",
-      "Not hot dog.",
-      "Compromise is the shared hypotenuse of the conjoined triangles of success.",
-      "I am going to disrupt this bathroom.",
-      "Is it Zune-bad? No, Gavin... this is Apple Maps bad.",
-      "Don't touch anything. Failure is contagious.",
-      "Your inability to stop us from sucking is a failure of leadership.",
-      "I should not have eaten all that Satanist chicken.",
-      "I am… incredibly loyal."
-    ];
-
-    const quoteEl = document.getElementById("quote");
-    const progressFill = document.getElementById("progressFill");
-    const hintsEl = document.getElementById("hints");
-
-    let idx = 0;
-    let paused = false;
-
-    const DURATION_MS = 5200;   // time per quote
-    const FADE_MS = 700;        // CSS transition duration
-    const SWIPE_PX = 40;        // horizontal threshold to count as swipe
-    const IDLE_MS = 5000;       // show hints after 5s inactivity
-
-    /* -------- Utilities -------- */
-    function vibrate(pattern){
-      // graceful degradation (no error if unsupported)
-      if (navigator.vibrate) navigator.vibrate(pattern);
-    }
-    function setProgress(p){ // p in [0..1]
-      progressFill.style.insetInlineEnd = (100 - p*100) + "%";
-    }
-    function showQuote(i){
-      quoteEl.classList.remove("show");
-      setTimeout(() => {
-        quoteEl.textContent = `“${QUOTES[i]}”`;
-        setProgress(0);
-        requestAnimationFrame(() => quoteEl.classList.add("show"));
-      }, FADE_MS);
-    }
-    function next(user=false){
-      idx = (idx + 1) % QUOTES.length; showQuote(idx);
-      if (user) vibrate(12);
-    }
-    function prev(user=false){
-      idx = (idx - 1 + QUOTES.length) % QUOTES.length; showQuote(idx);
-      if (user) vibrate(12);
-    }
-    function togglePause(user=false){
-      paused = !paused;
-      if (user) vibrate([8]);
-    }
-
-    /* -------- Idle hints -------- */
-    let idleTimer = null;
-    function showHints(){ hintsEl.classList.add("visible"); }
-    function hideHints(){ hintsEl.classList.remove("visible"); }
-    function bumpActivity(){
-      hideHints();
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(showHints, IDLE_MS);
-    }
-
-    /* -------- Auto-progress -------- */
-    let rafId, startTick = null;
-    function tick(ts){
-      if (paused){ startTick = ts; rafId = requestAnimationFrame(tick); return; }
-      if (!startTick) startTick = ts;
-      const elapsed = ts - startTick;
-      const p = Math.min(elapsed / DURATION_MS, 1);
-      setProgress(p);
-      if (elapsed >= DURATION_MS){ next(false); startTick = ts; }
-      rafId = requestAnimationFrame(tick);
-    }
-
-    /* -------- Keyboard controls -------- */
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") { next(true); resetTimer(); bumpActivity(); }
-      if (e.key === "ArrowLeft")  { prev(true); resetTimer(); bumpActivity(); }
-      if (e.key === " " || e.code === "Space" || e.key === "Spacebar") {
-        e.preventDefault(); togglePause(true); bumpActivity();
-      }
-    });
-
-    /* -------- Click/Tap to pause -------- */
-    quoteEl.addEventListener("click", () => { togglePause(true); bumpActivity(); });
-
-    /* -------- Swipe support (pointer events + touch fallback) -------- */
-    let startX = 0, startY = 0, tracking = false, pointerId = null;
-
-    function onPointerDown(e){
-      tracking = true; pointerId = e.pointerId ?? null;
-      startX = e.clientX; startY = e.clientY;
-      if (quoteEl.setPointerCapture && pointerId != null) quoteEl.setPointerCapture(pointerId);
-      bumpActivity();
-    }
-    function onPointerMove(e){
-      if (!tracking) return;
-      const dx = e.clientX - startX, dy = e.clientY - startY;
-      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) e.preventDefault();
-    }
-    function onPointerUp(e){
-      if (!tracking) return;
-      tracking = false;
-      const dx = e.clientX - startX, dy = e.clientY - startY;
-      if (Math.abs(dx) >= SWIPE_PX && Math.abs(dx) > Math.abs(dy)){
-        if (dx < 0) { next(true); resetTimer(); } else { prev(true); resetTimer(); }
-      } else {
-        togglePause(true);
-      }
-      if (quoteEl.releasePointerCapture && pointerId != null) quoteEl.releasePointerCapture(pointerId);
-      pointerId = null;
-      bumpActivity();
-    }
-    if (window.PointerEvent){
-      quoteEl.addEventListener("pointerdown", onPointerDown);
-      quoteEl.addEventListener("pointermove", onPointerMove, { passive:false });
-      quoteEl.addEventListener("pointerup", onPointerUp);
-      quoteEl.addEventListener("pointercancel", () => { tracking = false; pointerId = null; });
-    } else {
-      // Touch fallback (older browsers)
-      quoteEl.addEventListener("touchstart", (e)=>{ const t=e.changedTouches[0]; startX=t.clientX; startY=t.clientY; tracking=true; bumpActivity(); }, {passive:true});
-      quoteEl.addEventListener("touchmove", (e)=>{ if(!tracking) return; const t=e.changedTouches[0]; const dx=t.clientX-startX; const dy=t.clientY-startY; if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>8) e.preventDefault(); }, {passive:false});
-      quoteEl.addEventListener("touchend", (e)=>{ if(!tracking) return; tracking=false; const t=e.changedTouches[0]; const dx=t.clientX-startX; const dy=t.clientY-startY; if (Math.abs(dx)>=SWIPE_PX && Math.abs(dx)>Math.abs(dy)){ if (dx<0){ next(true); resetTimer(); } else { prev(true); resetTimer(); } } else { togglePause(true); } bumpActivity(); }, {passive:false});
-      quoteEl.addEventListener("touchcancel", ()=>{ tracking=false; });
-    }
-
-    function resetTimer(){ startTick = null; setProgress(0); }
-
-    // Init
-    quoteEl.textContent = `“${QUOTES[idx]}”`;
-    requestAnimationFrame(() => quoteEl.classList.add("show"));
-    rafId = requestAnimationFrame(tick);
-    bumpActivity(); // start idle-hint timer
-  </script>
+    <script>
+        const appBar = document.getElementById('app-bar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 0) {
+                appBar.classList.add('elevated');
+            } else {
+                appBar.classList.remove('elevated');
+            }
+        });
+    </script>
 </body>
 </html>
-
