@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aviato — Silicon Valley Quotes</title>
+
+  <!-- Freely available fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Cinzel:wght@600;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- Lightened Tres Commas colorway --- */
+    :root{
+      --bg: #f7f3e7;      /* warm parchment */
+      --card: #fffaf0;    /* ivory card */
+      --garnet: #f7e7e4;  /* pale rose tint */
+      --red: #c4493f;     /* light label red */
+      --ink: #271a14;     /* deep brown text */
+      --muted: #7d6a38;   /* muted gold-brown */
+      --gold: #c7a433;    /* soft gold */
+      --amber: #f0c86a;   /* light amber */
+      --ring: #e8dfcf;    /* light border */
+      --radius: 18px;
+      --shadow: 0 12px 28px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.6);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      color: var(--ink);
+      background:
+        radial-gradient(1100px 700px at 18% 25%, rgba(199,164,51,.10), transparent 60%),
+        radial-gradient(1000px 700px at 85% 80%, rgba(244,210,180,.25), transparent 60%),
+        var(--bg);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      display:flex; align-items:center; justify-content:center;
+      padding: clamp(16px, 3vw, 36px);
+    }
+
+    .shell{ width: min(100%, 900px); }
+
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 12px; margin-bottom: clamp(18px, 2.5vw, 28px);
+    }
+    .brand{
+      display:flex; align-items:center; gap: 12px; text-decoration:none; color: var(--ink);
+      letter-spacing:.5px;
+    }
+
+    /* --- Tres Commas medallion logo (pure CSS) --- */
+    .logo{
+      display:grid; grid-auto-flow: column; gap: 6px; align-items:center;
+      padding: 8px 10px;
+      background: linear-gradient(180deg, #fff3f1, var(--garnet));
+      border: 1px solid var(--ring);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+    .logo i{
+      width: 18px; height: 18px; border-radius: 50%;
+      display:grid; place-items:center;
+      background: radial-gradient(circle at 30% 25%, #fff8d8 0%, #f7e6b1 30%, var(--amber) 65%, #d7b04a 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 4px rgba(0,0,0,.1);
+      position: relative;
+    }
+    .logo i::after{
+      content: ",";
+      font-family: "Cinzel", serif;
+      font-weight: 800;
+      font-size: 18px;
+      line-height: 1;
+      color: var(--red);
+      transform: translateY(-2px);
+    }
+    .wordmark{
+      font-family: "Cinzel", serif;
+      font-weight: 800;
+      font-size: clamp(18px, 2vw, 22px);
+      letter-spacing:.04em;
+    }
+
+    .frame{
+      position:relative;
+      background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.75)), var(--card);
+      border: 1px solid var(--ring);
+      border-radius: var(--radius);
+      padding: clamp(22px, 4vw, 44px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      min-height: 300px;
+      display:flex; align-items:center; justify-content:center;
+      text-align:center;
+      isolation: isolate;
+      /* smooth horizontal swipe while keeping page scroll */
+      touch-action: pan-y;
+      user-select: none;
+    }
+
+    /* Giant watermark of three commas */
+    .frame::after{
+      content: ", , ,";
+      position:absolute; inset:auto -6% -8% auto; 
+      font-family: "Cinzel", serif;
+      font-weight: 800;
+      font-size: clamp(140px, 25vw, 340px);
+      letter-spacing: .25em;
+      color: rgba(199,164,51,.12);
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.08));
+      pointer-events:none;
+      z-index: 0;
+    }
+
+    blockquote{
+      margin: 0;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: .2px;
+      font-size: clamp(24px, 4.8vw, 44px);
+      max-width: 32ch;
+      opacity: 0;
+      transform: translateY(10px) scale(.98);
+      filter: blur(3px);
+      transition: opacity 700ms ease, transform 700ms ease, filter 700ms ease;
+      will-change: opacity, transform, filter;
+      z-index: 1;
+      text-shadow: 0 1px 0 rgba(0,0,0,.06);
+      cursor: pointer; /* hint: tap/click works */
+    }
+    blockquote.show{ opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+
+    /* Idle swipe hints */
+    .hints{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between;
+      pointer-events:none; opacity:0; transition: opacity .45s ease;
+      z-index: 2;
+    }
+    .hints.visible{ opacity:1; }
+    .hint{
+      font-family: "Cinzel", serif;
+      font-weight: 800;
+      font-size: clamp(28px, 5vw, 54px);
+      color: rgba(39,26,20,.35);
+      background: linear-gradient(90deg, transparent, rgba(199,164,51,.18), transparent);
+      padding: 6px 10px; border-radius: 12px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.08));
+      animation-duration: 1.4s; animation-iteration-count: infinite; animation-timing-function: ease-in-out;
+    }
+    @keyframes nudge-left { 0%,100%{ transform: translateX(0) } 50%{ transform: translateX(-6px) } }
+    @keyframes nudge-right{ 0%,100%{ transform: translateX(0) } 50%{ transform: translateX(6px) } }
+    .hint-left { margin-left: 4px;  animation-name: nudge-left;  }
+    .hint-right{ margin-right: 4px; animation-name: nudge-right; }
+
+    .source{
+      margin-top: 14px;
+      font-size: clamp(12px, 1.6vw, 14px);
+      color: var(--muted);
+      font-family: "Cinzel", serif;
+      letter-spacing: .06em;
+      user-select: none;
+      z-index: 1;
+    }
+
+    footer{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-top: clamp(16px, 2.5vw, 22px);
+      gap: 12px; color: var(--muted); font-size: 14px; flex-wrap: wrap;
+    }
+
+    .progress{
+      position: relative; height: 4px; flex: 1; min-width: 140px;
+      background: #f0e6cf; border-radius: 999px; overflow: hidden; border: 1px solid var(--ring);
+    }
+    .progress > i{
+      position: absolute; inset: 0 100% 0 0;
+      background: linear-gradient(90deg, var(--gold), var(--amber));
+      transition: inset 200ms linear;
+    }
+
+    @media (max-width: 420px){
+      header{ flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell" role="application" aria-label="Silicon Valley quotes rotator">
+    <header>
+      <a href="/" class="brand" aria-label="Aviato home">
+        <div class="logo" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="wordmark">Aviato</div>
+      </a>
+      <div aria-hidden="true" style="font-family:'Cinzel',serif;color:var(--muted);">
+        Swipe ← / →  •  Tap/Space = pause
+      </div>
+    </header>
+
+    <main class="frame" aria-live="polite">
+      <blockquote id="quote" title="Tap to pause • Swipe left/right to navigate"></blockquote>
+      <!-- Idle swipe hints -->
+      <div class="hints" id="hints" aria-hidden="true">
+        <div class="hint hint-left">‹</div>
+        <div class="hint hint-right">›</div>
+      </div>
+      <div class="source">— Silicon Valley (HBO)</div>
+    </main>
+
+    <footer>
+      <div>Tres Commas • light palette • image-free</div>
+      <div class="progress" aria-hidden="true"><i id="progressFill"></i></div>
+    </footer>
+  </div>
+
+  <script>
+    // Add your quotes here
+    const QUOTES = [
+      "Middle-out compression.",
+      "We're building a new Internet.",
+      "I have zero tolerance for slackers.",
+      "These are not the doors of a billionaire, Richard.",
+      "I have a boat, but wait, that's not a skill.",
+      "Thoughts and prayers, obviously.",
+      "Not hot dog.",
+      "Compromise is the shared hypotenuse of the conjoined triangles of success.",
+      "I am going to disrupt this bathroom.",
+      "Is it Zune-bad? No, Gavin... this is Apple Maps bad.",
+      "Don't touch anything. Failure is contagious.",
+      "Your inability to stop us from sucking is a failure of leadership.",
+      "I should not have eaten all that Satanist chicken.",
+      "I am… incredibly loyal."
+    ];
+
+    const quoteEl = document.getElementById("quote");
+    const progressFill = document.getElementById("progressFill");
+    const hintsEl = document.getElementById("hints");
+
+    let idx = 0;
+    let paused = false;
+
+    const DURATION_MS = 5200;   // time per quote
+    const FADE_MS = 700;        // CSS transition duration
+    const SWIPE_PX = 40;        // horizontal threshold to count as swipe
+    const IDLE_MS = 5000;       // show hints after 5s inactivity
+
+    /* -------- Utilities -------- */
+    function vibrate(pattern){
+      // graceful degradation (no error if unsupported)
+      if (navigator.vibrate) navigator.vibrate(pattern);
+    }
+    function setProgress(p){ // p in [0..1]
+      progressFill.style.insetInlineEnd = (100 - p*100) + "%";
+    }
+    function showQuote(i){
+      quoteEl.classList.remove("show");
+      setTimeout(() => {
+        quoteEl.textContent = `“${QUOTES[i]}”`;
+        setProgress(0);
+        requestAnimationFrame(() => quoteEl.classList.add("show"));
+      }, FADE_MS);
+    }
+    function next(user=false){
+      idx = (idx + 1) % QUOTES.length; showQuote(idx);
+      if (user) vibrate(12);
+    }
+    function prev(user=false){
+      idx = (idx - 1 + QUOTES.length) % QUOTES.length; showQuote(idx);
+      if (user) vibrate(12);
+    }
+    function togglePause(user=false){
+      paused = !paused;
+      if (user) vibrate([8]);
+    }
+
+    /* -------- Idle hints -------- */
+    let idleTimer = null;
+    function showHints(){ hintsEl.classList.add("visible"); }
+    function hideHints(){ hintsEl.classList.remove("visible"); }
+    function bumpActivity(){
+      hideHints();
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(showHints, IDLE_MS);
+    }
+
+    /* -------- Auto-progress -------- */
+    let rafId, startTick = null;
+    function tick(ts){
+      if (paused){ startTick = ts; rafId = requestAnimationFrame(tick); return; }
+      if (!startTick) startTick = ts;
+      const elapsed = ts - startTick;
+      const p = Math.min(elapsed / DURATION_MS, 1);
+      setProgress(p);
+      if (elapsed >= DURATION_MS){ next(false); startTick = ts; }
+      rafId = requestAnimationFrame(tick);
+    }
+
+    /* -------- Keyboard controls -------- */
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { next(true); resetTimer(); bumpActivity(); }
+      if (e.key === "ArrowLeft")  { prev(true); resetTimer(); bumpActivity(); }
+      if (e.key === " " || e.code === "Space" || e.key === "Spacebar") {
+        e.preventDefault(); togglePause(true); bumpActivity();
+      }
+    });
+
+    /* -------- Click/Tap to pause -------- */
+    quoteEl.addEventListener("click", () => { togglePause(true); bumpActivity(); });
+
+    /* -------- Swipe support (pointer events + touch fallback) -------- */
+    let startX = 0, startY = 0, tracking = false, pointerId = null;
+
+    function onPointerDown(e){
+      tracking = true; pointerId = e.pointerId ?? null;
+      startX = e.clientX; startY = e.clientY;
+      if (quoteEl.setPointerCapture && pointerId != null) quoteEl.setPointerCapture(pointerId);
+      bumpActivity();
+    }
+    function onPointerMove(e){
+      if (!tracking) return;
+      const dx = e.clientX - startX, dy = e.clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) e.preventDefault();
+    }
+    function onPointerUp(e){
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.clientX - startX, dy = e.clientY - startY;
+      if (Math.abs(dx) >= SWIPE_PX && Math.abs(dx) > Math.abs(dy)){
+        if (dx < 0) { next(true); resetTimer(); } else { prev(true); resetTimer(); }
+      } else {
+        togglePause(true);
+      }
+      if (quoteEl.releasePointerCapture && pointerId != null) quoteEl.releasePointerCapture(pointerId);
+      pointerId = null;
+      bumpActivity();
+    }
+    if (window.PointerEvent){
+      quoteEl.addEventListener("pointerdown", onPointerDown);
+      quoteEl.addEventListener("pointermove", onPointerMove, { passive:false });
+      quoteEl.addEventListener("pointerup", onPointerUp);
+      quoteEl.addEventListener("pointercancel", () => { tracking = false; pointerId = null; });
+    } else {
+      // Touch fallback (older browsers)
+      quoteEl.addEventListener("touchstart", (e)=>{ const t=e.changedTouches[0]; startX=t.clientX; startY=t.clientY; tracking=true; bumpActivity(); }, {passive:true});
+      quoteEl.addEventListener("touchmove", (e)=>{ if(!tracking) return; const t=e.changedTouches[0]; const dx=t.clientX-startX; const dy=t.clientY-startY; if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>8) e.preventDefault(); }, {passive:false});
+      quoteEl.addEventListener("touchend", (e)=>{ if(!tracking) return; tracking=false; const t=e.changedTouches[0]; const dx=t.clientX-startX; const dy=t.clientY-startY; if (Math.abs(dx)>=SWIPE_PX && Math.abs(dx)>Math.abs(dy)){ if (dx<0){ next(true); resetTimer(); } else { prev(true); resetTimer(); } } else { togglePause(true); } bumpActivity(); }, {passive:false});
+      quoteEl.addEventListener("touchcancel", ()=>{ tracking=false; });
+    }
+
+    function resetTimer(){ startTick = null; setProgress(0); }
+
+    // Init
+    quoteEl.textContent = `“${QUOTES[idx]}”`;
+    requestAnimationFrame(() => quoteEl.classList.add("show"));
+    rafId = requestAnimationFrame(tick);
+    bumpActivity(); // start idle-hint timer
+  </script>
+</body>
+</html>
